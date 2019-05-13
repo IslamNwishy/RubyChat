@@ -1,0 +1,10 @@
+
+<div style="margin: auto;width: 80%">
+<%= form_with(model: room, local: true) do |f| %>
+  <%#= f.error_notification %>
+  <div class="md-form form-inline mb-3 mt-5">
+    <%= f.text_field :title, class:"form-control mr-sm-2 w-75",placeholder:"Room Name"%>
+    <%= f.submit "Add Room", class:"btn btn-outline-success my-2 my-sm-0", style:"display:inline-block" %>
+  </div>
+<% end %>
+</div>

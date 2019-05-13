@@ -1,0 +1,73 @@
+<div style="background:transparent" class="jumbotron">
+  <div style="margin-left: 20px;margin-right: 20px">
+  <h1 style = 'text-align:center'><%=@room.title %></h1>
+  <div class= "well" id="chatbox" name="chatDiv" style= "height:250px; border: solid 1px #222222; overflow-y: scroll">
+    <% @room.messages.each do |message| %>
+      <p><b><%= message.user.Name %></b>: <%= message.body %></p>
+    <% end %>
+
+  </div>
+    <div class= "input-group mb-3 ">
+        <input class="form-control" type="text" id="body" placeholder="Send a message">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" onclick="sendData();" id="sendBtn">Send</button>
+      </div>
+    </div>
+      <input id="user_id" value="<%=current_user.id%>" style="display:none">
+      <input id="chat_room_id" value="<%=@room.id%>" style="display:none">
+      <input id="Name" value="<%=current_user.Name%>" style="display:none">
+    </div>
+  <script>
+
+      var objDiv = document.getElementById("chatbox");
+      objDiv.scrollTop = objDiv.scrollHeight;
+      var ids=[];
+      var chatId=document.getElementById("chat_room_id").value;
+      sub = App.cable.subscriptions.create('ChatChannel', {
+          received:handleReceived=({chat_room_id,user_id,body,name,id})=> {
+              if (chat_room_id === chatId) {
+                  var found = ids.find(function(element) {
+                      return element == id;
+                  });
+                  if(found==undefined)
+                  {
+                      ids.push(id);
+                      addMsg(name, body);
+                  }
+              }
+          }
+      })
+      
+      function sendData() {
+          var chatId=document.getElementById("chat_room_id").value;
+          var userId=document.getElementById("user_id").value;
+          var message=document.getElementById("body").value;
+          var name=document.getElementById("Name").value;
+          if(message.length==0)
+              return;
+          sub.send({chat_room_id:chatId,user_id:userId,body:message,name:name})
+          document.getElementById("body").value="";
+      }
+      function addMsg(Name,body) {
+          var para = document.createElement("p");
+          var bold=document.createElement("b");
+          var name=document.createTextNode(Name);
+          bold.appendChild(name);
+          var message = document.createTextNode(": "+body);      // Create a text node
+          para.appendChild(bold);
+          para.appendChild(message);
+          var objDiv = document.getElementById("chatbox");
+          objDiv.appendChild(para);
+          objDiv.scrollTop = objDiv.scrollHeight;
+      }
+      document.getElementById("body").addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+              event.preventDefault();
+              document.getElementById("sendBtn").click();
+          }
+      });
+    
+      
+  </script>
+  </div>
+</div>

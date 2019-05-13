@@ -1,0 +1,26 @@
+<%if current_user%>
+
+
+<div style="background:transparent" class="jumbotron">
+  <h1 class="display-3">Welcome Back <%= current_user.Name%>!</h1>
+  <p class="lead">join a room you like and start chatting</p>
+  <hr class="my-4">
+  <p>Press the join button to meet new friends</p>
+  <p class="lead">
+  <a class="btn btn-primary btn-lg" href="join_room">Join</a>
+  </p>
+</div>
+
+<%else%>
+
+<div style="background:transparent" class="jumbotron">
+  <h1 class="display-3">Welcome!</h1>
+  <p class="lead">This is a fun Chat App.</p>
+  <hr class="my-4">
+  <p>Press the register button to start texting your friends</p>
+  <p class="lead">
+    <%= link_to "Register", new_user_registration_path, class: "btn btn-primary btn-lg"%>
+  </p>
+</div>
+
+<%end%>

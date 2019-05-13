@@ -1,0 +1,19 @@
+<div class = "container">
+  <h2>Choose a Room</h2>
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr>
+          <p class = "h5 float-left font-weight-bold">
+            - 
+            <td><%= room.title %></td>
+          </p>
+          <div class ="text-right">
+            <div class = "btn btn-outline-primary" >
+              <td><%=  link_to 'join', controller:'pages',action:'chat_room',id: room.id %></td>
+            </div>
+          </div>
+        </tr>
+        <br>
+      <% end %>
+    </tbody>
+</div>

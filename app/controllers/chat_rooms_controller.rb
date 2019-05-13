@@ -1,0 +1,3 @@
+class ChatRoomsController < ApplicationController
+
+end

@@ -1,0 +1,21 @@
+
+<div class="container">
+  
+    <% if !current_user.image.attached? %>
+        <%= image_tag("EmptyProfile.png",width: '20% \9' , style: 'float: left; margin-right: 50px')%>
+    <% else %>
+        <%= image_tag(current_user.image,width: '30% \9' , style: 'float: left; margin-right: 50px')%>
+    <% end %>
+        <h5 >Name: <%=current_user.Name%></h5>
+        <h5>UserName: <%=current_user.username%></h5>
+        <h5>Email: <%=current_user.email%></h5>
+        <h5>ID#: <%=current_user.ID_Number%></h5>
+        <h5>Mobile: <%=current_user.mobile%></h5>
+        <h5>Birthdate: <%=current_user.birthDate%></h5>
+
+
+   
+
+    
+
+</div>
